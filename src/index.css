@@ -1,0 +1,98 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'VT323';
+  src: url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+}
+
+:root {
+  --text-color: #00ff00;
+  --bg-color: #000;
+  --card-bg: rgba(0, 17, 0, 0.8);
+}
+
+.light {
+  --text-color: #003300;
+  --bg-color: #f0fff0;
+  --card-bg: rgba(240, 255, 240, 0.8);
+}
+
+body {
+  background-color: var(--bg-color);
+  font-family: 'VT323', monospace;
+  color: var(--text-color);
+  transition: background-color 0.3s ease;
+}
+
+.matrix-bg {
+  background-color: var(--card-bg);
+  border: 1px solid var(--text-color);
+  box-shadow: 0 0 10px rgba(0, 255, 0, 0.2);
+  backdrop-filter: blur(4px);
+  transition: all 0.3s ease;
+}
+
+.matrix-bg:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 20px rgba(0, 255, 0, 0.4);
+  border-color: var(--text-color);
+  background-color: var(--card-bg);
+}
+
+.terminal-input {
+  background-color: transparent;
+  border: none;
+  color: var(--text-color);
+  caret-color: var(--text-color);
+}
+
+.terminal-input:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.hack-button {
+  border: 1px solid var(--text-color);
+  transition: all 0.2s ease;
+}
+
+.hack-button:hover {
+  background-color: var(--text-color);
+  color: var(--bg-color);
+  box-shadow: 0 0 15px rgba(0, 255, 0, 0.4);
+}
+
+@keyframes typing {
+  0% { width: 0 }
+  100% { width: 100% }
+}
+
+@keyframes blink {
+  50% { border-color: transparent }
+}
+
+.typing-animation {
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 2px solid var(--text-color);
+  width: 100%;
+  animation: 
+    typing 2s steps(40, end),
+    blink .75s step-end infinite;
+}
+
+.typing-animation-delayed {
+  animation-delay: 2s;
+}
+
+/* Ensure modal is always on top */
+.modal-overlay {
+  z-index: 100;
+}
+
+/* Adjust scroll to top button to be below modal */
+.scroll-to-top {
+  z-index: 90;
+}
