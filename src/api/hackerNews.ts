@@ -55,9 +55,10 @@ export async function getTopStories(query: string = '', page: number = 0): Promi
     const start = page * ITEMS_PER_PAGE;
     const end = start + ITEMS_PER_PAGE;
     
-    const storyPromises = ids
-      .slice(start, end)
-      .map((id: number) => fetchItem(id));
+    // Filter out duplicate IDs before fetching
+    const uniqueIds = [...new Set(ids.slice(start, end))];
+    
+    const storyPromises = uniqueIds.map((id: unknown) => fetchItem(id as number));
     
     const stories = await Promise.all(storyPromises);
     

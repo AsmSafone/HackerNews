@@ -17,6 +17,14 @@ export default function App() {
   const [page, setPage] = useState(0);
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);
+  const [currentTime, setCurrentTime] = useState(
+    new Date().toLocaleTimeString('en-US', { 
+      hour12: true,
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit'
+    })
+  );
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -50,7 +58,13 @@ export default function App() {
     try {
       const nextPage = page + 1;
       const moreStories = await getTopStories(debouncedQuery, nextPage);
-      setStories(prev => [...prev, ...moreStories]);
+      setStories(prev => {
+        // Create a Set of existing story IDs
+        const existingIds = new Set(prev.map(story => story.id));
+        // Only add stories that don't exist yet
+        const uniqueNewStories = moreStories.filter(story => !existingIds.has(story.id));
+        return [...prev, ...uniqueNewStories];
+      });
       setPage(nextPage);
     } catch (error) {
       console.error('Failed to load more stories:', error);
@@ -79,15 +93,33 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentTime(new Date().toLocaleTimeString('en-US', {
+        hour12: true,
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+      }));
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
+
   return (
     <>
       <MatrixBackground />
-      <ThemeToggle />
       <div className="min-h-screen p-4 md:p-8">
         <header className="max-w-5xl mx-auto mb-8">
-          <h1 className="text-2xl md:text-4xl mb-6 overflow-hidden">
-            <span className="typing-animation inline-block">_ Hacker News Terminal</span>
-          </h1>
+          <div className="flex justify-between items-center mb-6 relative">
+            <h1 className="text-2xl md:text-4xl overflow-hidden">
+              <span className="typing-animation inline-block">_ Hacker News Terminal</span>
+            </h1>
+            <div className="text-xl animate-fade-in absolute right-12">
+              {currentTime}
+            </div>
+            <ThemeToggle />
+          </div>
           <div className="typing-animation-delayed">
             <SearchBar value={searchQuery} onChange={setSearchQuery} />
           </div>
@@ -96,7 +128,7 @@ export default function App() {
         <main className="max-w-5xl mx-auto">
           <div className="grid md:grid-cols-2 gap-4">
             {loading
-              ? Array.from({ length: 6 }).map((_, index) => (
+              ? Array.from({ length: 10 }).map((_, index) => (
                   <StorySkeleton key={`loading-${index}`} />
                 ))
               : stories.map((story) => (
@@ -106,6 +138,8 @@ export default function App() {
               <>
                 <StorySkeleton key="loading-more-1" />
                 <StorySkeleton key="loading-more-2" />
+                <StorySkeleton key="loading-more-3" />
+                <StorySkeleton key="loading-more-4" />
               </>
             )}
           </div>
