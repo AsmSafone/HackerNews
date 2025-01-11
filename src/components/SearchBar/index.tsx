@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Terminal } from 'lucide-react';
+import { Terminal, Clock } from 'lucide-react';
 import { SearchBarProps } from './types';
 
-export const SearchBar: React.FC<SearchBarProps> = ({ value, onChange }) => {
+export const SearchBar: React.FC<SearchBarProps> = ({ value, onChange, currentTime }) => {
   const [placeholder, setPlaceholder] = useState('');
   const fullPlaceholder = 'Hack the search...';
 
@@ -31,6 +31,12 @@ export const SearchBar: React.FC<SearchBarProps> = ({ value, onChange }) => {
           placeholder={placeholder}
           className="terminal-input w-full text-xl"
         />
+        {currentTime && (
+          <div className="flex items-center gap-2 text-lg whitespace-nowrap animate-fade-in">
+            <Clock className="h-4 w-4" />
+            {currentTime}
+          </div>
+        )}
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import { useMatrixEffect } from './useMatrixEffect';
 
 export const MatrixBackground: React.FC = () => {

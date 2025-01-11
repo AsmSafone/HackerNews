@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ExternalLink, MessageSquare, ThumbsUp, Loader2 } from 'lucide-react';
+import { ExternalLink, MessageSquare, ThumbsUp, Loader2, Clock } from 'lucide-react';
 import { formatTimestamp } from '../../utils/date';
 import { Modal } from '../Modal';
 import { fetchPreview } from '../../api/hackerNews';
@@ -41,7 +41,10 @@ export const StoryCard: React.FC<StoryCardProps> = ({ story }) => {
               <MessageSquare className="h-4 w-4" />
               {story.descendants || 0}
             </span>
-            <span>{formatTimestamp(story.time)}</span>
+            <span className="flex items-center gap-1">
+              <Clock className="h-4 w-4" />
+              {formatTimestamp(story.time)}
+            </span>
           </div>
           <button
             onClick={() => setIsPreviewOpen(true)}
@@ -57,7 +60,10 @@ export const StoryCard: React.FC<StoryCardProps> = ({ story }) => {
           <h2 className="text-xl md:text-2xl">{story.title}</h2>
           <div className="flex flex-wrap items-center gap-2 md:gap-4 text-sm opacity-80">
             <span>By {story.by}</span>
-            <span>{formatTimestamp(story.time)}</span>
+            <span className="flex items-center gap-1">
+              <Clock className="h-4 w-4" />
+              {formatTimestamp(story.time)}
+            </span>
             <span className="flex items-center gap-1">
               <ThumbsUp className="h-4 w-4" /> {story.score}
             </span>

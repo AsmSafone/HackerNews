@@ -2,6 +2,11 @@
   "name": "hacker-news",
   "private": true,
   "version": "0.0.1",
+  "author": {
+    "name": "Safone",
+    "email": "asmsafone@gmail.com",
+    "url": "https://github.com/AsmSafone"
+  },
   "type": "module",
   "scripts": {
     "dev": "vite",

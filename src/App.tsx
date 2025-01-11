@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback, useRef } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { getTopStories } from './api/hackerNews';
 import { SearchBar } from './components/SearchBar';
 import { StoryCard } from './components/StoryCard';
@@ -18,11 +18,13 @@ export default function App() {
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);
   const [currentTime, setCurrentTime] = useState(
-    new Date().toLocaleTimeString('en-US', { 
-      hour12: true,
+    new Date().toLocaleString('en-US', { 
+      month: 'short',
+      day: 'numeric',
       hour: '2-digit',
       minute: '2-digit',
-      second: '2-digit'
+      second: '2-digit',
+      hour12: true
     })
   );
 
@@ -95,11 +97,13 @@ export default function App() {
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrentTime(new Date().toLocaleTimeString('en-US', {
-        hour12: true,
+      setCurrentTime(new Date().toLocaleString('en-US', {
+        month: 'short',
+        day: 'numeric',
         hour: '2-digit',
         minute: '2-digit',
-        second: '2-digit'
+        second: '2-digit',
+        hour12: true
       }));
     }, 1000);
 
@@ -115,13 +119,14 @@ export default function App() {
             <h1 className="text-2xl md:text-4xl overflow-hidden">
               <span className="typing-animation inline-block">_ Hacker News Terminal</span>
             </h1>
-            <div className="text-xl animate-fade-in absolute right-12">
-              {currentTime}
-            </div>
             <ThemeToggle />
           </div>
           <div className="typing-animation-delayed">
-            <SearchBar value={searchQuery} onChange={setSearchQuery} />
+            <SearchBar 
+              value={searchQuery} 
+              onChange={setSearchQuery} 
+              currentTime={currentTime}
+            />
           </div>
         </header>
 
