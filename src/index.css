@@ -66,8 +66,8 @@ body {
 
 @keyframes typing {
   0% { width: 0 }
-  50% { width: 100% }
-  51% { width: 100% }
+  10% { width: 100% }
+  90% { width: 100% }
   100% { width: 0 }
 }
 
@@ -81,7 +81,7 @@ body {
   border-right: 2px solid var(--text-color);
   width: 100%;
   animation: 
-    typing 4s steps(40, end) infinite,
+    typing 64s steps(40, end) infinite,
     blink .75s step-end infinite;
 }
 
